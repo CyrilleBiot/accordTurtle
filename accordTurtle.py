@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import turtle
 
 # Les accords majeurs
-A = ("X",0,2,2,2,0, "A", "LA")
-B = ("X", 2, 4,4,4,2, "B", "SI")
-C = ("X",3,2,0,1,0,"C", "DO")
-D = ("X","X",0,2,3,2, "D", "RE")
-E = (0,2,2,1,0,0, "E", "MI")
-F = ("X", "X", 3,2,1,1, "F", "FA")
-G = (3,2,0,0,0,1, "G", "SOL")
+dictAccord = {
+    "A" : ("X",0,2,2,2,0, "A", "LA"),
+    "B" : ("X", 2, 4,4,4,2, "B", "SI"),
+    "C" : ("X",3,2,0,1,0,"C", "DO"),
+    "D" : ("X","X",0,2,3,2, "D", "RE"),
+    "E" : (0,2,2,1,0,0, "E", "MI"),
+    "F" : ("X", "X", 3,2,1,1, "F", "FA"),
+    "G" : (3,2,0,0,0,1, "G", "SOL")
+    }
 
-# Vitesse de la tortue
-turtle.speed(0)
-
+# Les fonctions
 def dessine_moi_un_manche(x,y, largeur):
     """
     Fonction dessinant le manche de la guitare
@@ -88,23 +87,32 @@ def dessine_moi_un_accord(accord, x, y, largeur):
     turtle.goto(-70,-30)
     turtle.write(accord[len(accord)-2] + ' --- ' + accord[len(accord)-1], font=("Arial", 14, "bold"))
 
+# ===================================================================================================================
+# LANCEMENT PROGRAMME
+# ===================================================================================================================
 
 
-# =========================================
-#            Fin des fonctions
-# =========================================
+while True:
+       try:
+           accordDemande = input("Quel accord ? ")
+           if accordDemande.upper() in dictAccord.keys():
+               accord = dictAccord[accordDemande]
+               print("Accord demandé : " , accord)
+               print(type(accord))
+               print(accord)
+               break
+           else:
+               print('Accord non géré.')
+               print('Voici les accords actuellement disponibles : ')
+               for cle in dictAccord:
+                   print("{}".format(cle))
+       except ValueError:
+           print("Oops!  Réponse incorrecte... Réessayer...")
 
+
+# Vitesse de la tortue
+turtle.speed(0)
 dessine_moi_un_manche(-100, 100, 25)
-dessine_moi_un_accord(G, -100, 100, 25)
+dessine_moi_un_accord(accord, -100, 100, 25)
 turtle.hideturtle()
-
-
 turtle.done()
-
-
-
-
-
-
-
-

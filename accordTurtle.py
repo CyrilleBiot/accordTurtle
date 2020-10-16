@@ -13,17 +13,20 @@ dictAccord = {
     "F" : ("X", "X", 3,2,1,1, "F", "FA"),
     "G" : (3,2,0,0,0,1, "G", "SOL")
     }
+# Tuple contenant : position x, position y et la largeur d'une case de manche
+position = (-100, 100, 25)
+# Vitesse de la tortue
+speed = 0
 
 # Les fonctions
-def dessine_moi_un_manche(x,y, largeur):
+def dessine_moi_un_manche(position):
     """
     Fonction dessinant le manche de la guitare
-    :param x: position x (integer)
-    :param y: position y (integer)
-    :param largueur: largeur case du manche (integer)
+    :param position: Tuple contenant : position x, position y et la largeur d'une case de manche
     :return:
     """
 
+    x,y,largeur = position
     # Positionnement et dessin de la fret
     turtle.penup()
     turtle.goto(x,y)
@@ -53,15 +56,14 @@ def dessine_moi_un_manche(x,y, largeur):
         x = xbase
 
 
-def dessine_moi_un_accord(accord, x, y, largeur):
+def dessine_moi_un_accord(accord, position):
     """
     Fonction représentant la tablature de l'accord
     :param accord: Tuple Accord de tablature encodé + Notation Américaine + Notation Française
-    :param x: Coordonnée X du manche
-    :param y: Coordonnée y du manche
+    :param position: Tuple contenant : position x, position y et la largeur d'une case de manche
     :return:
     """
-
+    x, y, largeur = position
     ybase = y
     for i in range(len(accord)-2) :
         if isinstance(accord[i], int):
@@ -91,10 +93,14 @@ def dessine_moi_un_accord(accord, x, y, largeur):
 # LANCEMENT PROGRAMME
 # ===================================================================================================================
 
+listeAccords ='Accords disponibles : '
+for cle in dictAccord:
+    listeAccords += cle + ' '
+print(listeAccords)
 
 while True:
        try:
-           accordDemande = input("Quel accord ? ")
+           accordDemande = input("Quel accord afficher ? ")
            if accordDemande.upper() in dictAccord.keys():
                accord = dictAccord[accordDemande]
                print("Accord demandé : " , accord)
@@ -103,16 +109,17 @@ while True:
                break
            else:
                print('Accord non géré.')
-               print('Voici les accords actuellement disponibles : ')
-               for cle in dictAccord:
-                   print("{}".format(cle))
+               print(listeAccords)
        except ValueError:
            print("Oops!  Réponse incorrecte... Réessayer...")
 
+#
+# Execution avec turtle
+#
 
 # Vitesse de la tortue
-turtle.speed(0)
-dessine_moi_un_manche(-100, 100, 25)
-dessine_moi_un_accord(accord, -100, 100, 25)
+turtle.speed(speed)
+dessine_moi_un_manche(position)
+dessine_moi_un_accord(accord, position)
 turtle.hideturtle()
 turtle.done()

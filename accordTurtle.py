@@ -25,8 +25,9 @@ def dessine_moi_un_manche(position):
     :param position: Tuple contenant : position x, position y et la largeur d'une case de manche
     :return:
     """
-
+    # Extrait les données du tuple
     x,y,largeur = position
+
     # Positionnement et dessin de la fret
     turtle.penup()
     turtle.goto(x,y)
@@ -39,6 +40,8 @@ def dessine_moi_un_manche(position):
 
     # Dessin des 4 premières cases
     turtle.pensize(1)
+
+    # Mise en mémoire de la valeur par défaut de X
     xbase = x
     for i in range(4):
         turtle.goto(x,y)
@@ -63,8 +66,11 @@ def dessine_moi_un_accord(accord, position):
     :param position: Tuple contenant : position x, position y et la largeur d'une case de manche
     :return:
     """
+    # Extrait les données du tuple
     x, y, largeur = position
+    # Recupere les valeurs par défaut de X et de Y
     ybase = y
+    xbase = x
     for i in range(len(accord)-2) :
         if isinstance(accord[i], int):
             y = ybase - (accord[i] * largeur) + (largeur/2)
@@ -72,21 +78,21 @@ def dessine_moi_un_accord(accord, position):
             print(accord[i])
             # Corde à vide, on fait un cercle
             if accord[i] == 0:
-                turtle.dot(20, 'blue')
-                turtle.dot(16, 'white')
+                turtle.dot(largeur - 5, 'blue')
+                turtle.dot(largeur - 10, 'white')
 
             # Corde pincée, on met un point
             else:
-                turtle.dot(20, 'blue')
+                turtle.dot(largeur - 5, 'blue')
         else:
-            y = 100 + 12.5
+            y = ybase + (largeur/2)
             turtle.goto(x, y)
-            turtle.dot(20,'red')
-            turtle.dot(16,'white')
-        x = x + 25
-
+            turtle.dot(largeur - 5,'red')
+            turtle.dot(largeur - 10,'white')
+        x = x + largeur
         turtle.goto(x, y)
-    turtle.goto(-70,-30)
+    # Ligne à revoir
+    turtle.goto(xbase + largeur,(ybase - (5 * largeur)))
     turtle.write(accord[len(accord)-2] + ' --- ' + accord[len(accord)-1], font=("Arial", 14, "bold"))
 
 # ===================================================================================================================
@@ -102,7 +108,7 @@ while True:
        try:
            accordDemande = input("Quel accord afficher ? ")
            if accordDemande.upper() in dictAccord.keys():
-               accord = dictAccord[accordDemande]
+               accord = dictAccord[accordDemande.upper()]
                print("Accord demandé : " , accord)
                print(type(accord))
                print(accord)

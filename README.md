@@ -8,5 +8,7 @@ Cliquer sur l'image pour voir la vidéo.
 
 # pil-test.sh
 Le même mais à partir du module pil plutôt que celui de turtle.
+Nécessite le paquet [b]imagemagick[/b]
+
 
 En développement.
